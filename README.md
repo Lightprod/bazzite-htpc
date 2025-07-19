@@ -19,6 +19,7 @@ Then rebase to the _verified_ image:
 ``` sudo systemctl reboot ```
 
 # Changes
+
     - Added rpm packages:
         - _Libraries_:
             - gvfs-fuse
@@ -70,4 +71,5 @@ Then rebase to the _verified_ image:
 
 
 Notes: 
+
     * Bazzite's openrgb is an appimage. I set it up as a rpm for automatic updates and avoid a risk of depending on fuse2.
