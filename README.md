@@ -20,14 +20,14 @@ Then rebase to the _verified_ image:
 
 # Changes
 
-    - Added rpm packages:
-        - _Libraries_:
-            - gvfs-fuse
-            - gvfs-smb
-        - _Games / Launchers_:
-            - heroic-games-launcher
-        - _KDE app suit_:
-            - konsole
+ - Added rpm packages:
+    - _Libraries_:
+      - gvfs-fuse
+      - gvfs-smb
+   - _Games / Launchers_:
+      - heroic-games-launcher
+    - _KDE app suit_:
+      - konsole
             - plasma-discover
             - plasma-discover-flatpak
             - plasma-discover-notifier
