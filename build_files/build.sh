@@ -23,6 +23,7 @@ LAYERED_REPO_PACKAGES=(
     plasma-discover-flatpak 
     plasma-discover-notifier
     plasma-discover-kns
+    discover-overlay
     kvantum
     mc
     atuin
