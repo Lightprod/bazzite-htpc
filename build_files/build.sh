@@ -23,7 +23,6 @@ LAYERED_REPO_PACKAGES=(
     plasma-discover-flatpak 
     plasma-discover-notifier
     plasma-discover-kns
-    discover-overlay
     kvantum
     mc
     atuin
@@ -65,8 +64,8 @@ echo "Enabling COPR repos"
 
 echo "Installing packages"
 
-    dnf5 install --skip-broken -y "${LAYERED_REPO_PACKAGES[@]}"
-    dnf5 install --skip-broken -y "${LAYERED_DISTANT_PACKAGES[@]}"
+    dnf5 install --skip-broken --skip-unavailable -y "${LAYERED_REPO_PACKAGES[@]}"
+    dnf5 install --skip-broken --skip-unavailable -y "${LAYERED_DISTANT_PACKAGES[@]}"
 
 echo "Disabling COPR repos"
     for repo in "${COPR_REPOS[@]}"; do
