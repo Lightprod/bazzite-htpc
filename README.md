@@ -40,7 +40,7 @@ Then rebase to the _verified_ image:
         - plasma-discover-flatpak
         - plasma-discover-notifier
         - plasma-discover-kns
-        - discover-overlay
+        ~~- discover-overlay~~
         - kvantum
     - _Sysadmin and utilitaries_:
         - cockpit
