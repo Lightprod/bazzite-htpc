@@ -15,18 +15,25 @@ on:
         options:
           - amd64
           - arm64
-  pull_request:
-    branches:
-      - main
-    paths:
-      - './disk_config/disk.toml'
-      - './disk_config/iso.toml'
-      - './.github/workflows/build-disk.yml'
+  # pull_request:
+  #   branches:
+  #     - testing
+  #   paths:
+  #     - './disk_config/disk.toml'
+  #     - './disk_config/iso.toml'
+  #     - './.github/workflows/build-disk.yml'
+  # push:
+  #   branches:
+  #     - testing
+  #   paths-ignore:
+  #     - '**/README.md'
+  #     - '**/README template.md'
+  #     - '.github/**'
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }} # output of build.yml, keep in sync
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "latest"
+  DEFAULT_TAG: "testing"
   BIB_IMAGE: "ghcr.io/lorbuschris/bootc-image-builder:20250608" # "quay.io/centos-bootc/bootc-image-builder:latest" - see https://github.com/osbuild/bootc-image-builder/pull/954
 
 concurrency:
