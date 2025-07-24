@@ -1,15 +1,14 @@
 # Bazzite-htpc
 
-[Template readme](https://github.com/ublue-os/image-template)
+[Template readme](https://github.com/Lightprod/bazzite-htpc/blob/main/README%20template.md)
 
 # Purpose
-This _testing_ image is a custom version of Bazzite based from ```bazzite:latest``` using [the Ublue project's image template](https://github.com/ublue-os/image-template). 
+This image is a custom version of Bazzite based from ```bazzite-deck:latest``` using [the Ublue project's image template](https://github.com/ublue-os/image-template). 
 
-It comes with (some) KDE default apps restored  and add additional packages and settings to use on my personal HTPC.
+It comes with (some) KDE default apps restored and add additional packages and settings to use on my personal HTPC.
 
 **_Please note that this image is made for personal use only and I do not provide support of any kind. I am not responsible for any kind of damage resulting from using this image._**
 
-**_THIS IMAGE IS ONLY UPDATED WHEN NEEDED WHEN TESTING CHANGES TO MAIN. DO NOT USE IT_**
 
 # Rebase
 
@@ -17,13 +16,13 @@ You can rebase to this image from any **KDE based** ublue image.
 
 Start by rebasing to the _unverified_ image using those command:
 
-``` sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/lightprod/bazzite-htpc:testing ```
+``` sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/lightprod/bazzite-htpc:latest ```
 
 ``` sudo systemctl reboot ```
 
 Then rebase to the _verified_ image:
 
-``` sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/lightprod/bazzite-htpc:testing ```
+``` sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/lightprod/bazzite-htpc:latest ```
 
 ``` sudo systemctl reboot ```
 
