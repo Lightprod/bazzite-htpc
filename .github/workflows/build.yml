@@ -1,5 +1,5 @@
 ---
-name: Build bazzite-htpc:latest
+name: Build bazzite-htpc
 on:
   # pull_request:
   #   branches:
