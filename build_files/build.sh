@@ -83,8 +83,8 @@ echo "Disabling COPR repos"
 echo "Installing additional flatpaks"
     flatpak install -y -v --system "${FLATPAK_ADD[@]}"
 
-echo "Removing un-needed flatpaks"
-    flatpak remove -y -v "${FLATPAK_REMOVE[@]}"
+# echo "Removing un-needed flatpaks"
+#     flatpak remove -y -v "${FLATPAK_REMOVE[@]}"
 
 echo "Enabling system unit files"
     systemctl enable cockpit.socket
