@@ -35,6 +35,11 @@ LAYERED_DISTANT_PACKAGES=( # For packages not present in Fedora's repos
 )
 
     # Flatpaks
+
+FLATPAK_RM_REPO=(
+    fedora
+)
+
 FLATPAK_ADD=(
     one.ablaze.floorp
     io.github.ungoogled_software.ungoogled_chromium
@@ -72,11 +77,14 @@ echo "Disabling COPR repos"
         dnf5 copr disable "$repo" -y
     done
 
+echo "Remove fedora flatpaks repo"
+    flatpak remote-remove "${FLATPAK_RM_REPO[@]}"
+
 echo "Installing additional flatpaks"
     flatpak install -y -v --system "${FLATPAK_ADD[@]}"
 
 echo "Removing un-needed flatpaks"
-    flatpak install -y -v "${FLATPAK_REMOVE[@]}"
+    flatpak remove -y -v "${FLATPAK_REMOVE[@]}"
 
 echo "Enabling system unit files"
     systemctl enable cockpit.socket
