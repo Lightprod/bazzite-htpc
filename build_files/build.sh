@@ -77,8 +77,8 @@ echo "Disabling COPR repos"
         dnf5 copr disable "$repo" -y
     done
 
-echo "Remove fedora flatpaks repo"
-    flatpak remote-delete "${FLATPAK_RM_REPO[@]}"
+# echo "Remove fedora flatpaks repo"
+#     flatpak remote-delete "${FLATPAK_RM_REPO[@]}"
 
 echo "Installing additional flatpaks"
     flatpak install -y -v --system "${FLATPAK_ADD[@]}"
