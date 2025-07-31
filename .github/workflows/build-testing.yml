@@ -177,7 +177,7 @@ jobs:
         if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
 
       - name: Sign container image
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
         run: |
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
           for tag in ${{ steps.metadata.outputs.tags }}; do
