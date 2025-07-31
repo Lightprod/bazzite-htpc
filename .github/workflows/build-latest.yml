@@ -1,13 +1,13 @@
 ---
-name: Build bazzite-htpc:testing
+name: Build bazzite-htpc:latest
 on:
-  pull_request:
-    branches:
-      - testing
-    paths-ignore:
-      - '**/README.md'
-      - '**/README template.md'
-      - '.github/**'
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths-ignore:
+  #     - '**/README.md'
+  #     - '**/README template.md'
+  #     - '.github/**'
   schedule:
     - cron: '05 10 * * *'  # 10:05am UTC everyday
   # push:
@@ -42,10 +42,6 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: testing
-        
       - name: Prepare environment
         run: |
           # Lowercase the image uri
