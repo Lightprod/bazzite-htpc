@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -ouex pipefail
+
 echo "Enabling Syncthingy service"
 
 echo "Enabling Openrgb service"
