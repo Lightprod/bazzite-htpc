@@ -1,0 +1,3 @@
+import? "/usr/share/ublue-os/just/bazzite-htpc/70-bazzite-overwrites.just"
+import? "/usr/share/ublue-os/just/bazzite-htpc/80-bazzite-htpc.just"
+
