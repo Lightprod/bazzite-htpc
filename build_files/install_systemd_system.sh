@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-cho "Enabling cockpit socket"
+echo "Enabling cockpit socket"
     systemctl enable cockpit.socket
 
 echo "Enabling sshd service"  # For SSH access
