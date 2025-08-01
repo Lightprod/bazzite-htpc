@@ -11,4 +11,6 @@ echo "Installing systemd system services"
 echo "Installing systemd user services"
 /ctx/install_systemd_user.sh
 
+echo "Modifying upstream files"
+/ctx/files_modifications.sh
 
