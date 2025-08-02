@@ -16,8 +16,8 @@ cat /usr/share/ublue-os/bazzite/flatpak/install
 
 echo 'Modifying upstream flatpak blocklist'
 
-cat /ctx/files/flatpak/flatpak-blocklist >> /usr/share/ublue-os/bazzite/flatpak-blocklist
-cat /usr/share/ublue-os/bazzite/flatpak-blocklist
+cat /ctx/files/flatpak/flatpak-blocklist >> /usr/share/ublue-os/flatpak-blocklist
+cat /usr/share/ublue-os/flatpak-blocklist
 
 echo 'Modifying upstream Bazarr blacklist'
 
