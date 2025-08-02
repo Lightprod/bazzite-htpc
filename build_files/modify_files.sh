@@ -11,6 +11,7 @@ echo 'Modifying upstream default flatpaks'
 
 cat /ctx/files/flatpak/install >> /usr/share/ublue-os/bazzite/flatpak/install
 sed -i '1d' /usr/share/ublue-os/bazzite/flatpak/install
+sed -i '6d' /usr/share/ublue-os/bazzite/flatpak/install
 cat /usr/share/ublue-os/bazzite/flatpak/install
 
 echo 'Modifying upstream flatpak blocklist'
