@@ -1,7 +1,7 @@
 [customizations.installer.kickstart]
 contents = """
 %post
-bootc switch --mutate-in-place --transport -enforce-container-sigpolicy registry ghcr.io/lightprod/bazzite-htpc:testing
+bootc switch --transport --enforce-container-sigpolicy registry ghcr.io/lightprod/bazzite-htpc:testing
 %end
 """
 
