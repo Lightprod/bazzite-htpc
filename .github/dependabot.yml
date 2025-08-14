@@ -10,7 +10,8 @@ updates:
     schedule:
       interval: "weekly"
     pull-request-branch-name.separator: "-"
-    prefix: "[main] "
+    commit-message:
+      prefix: "[main] "
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -18,7 +19,8 @@ updates:
       interval: "weekly"
     pull-request-branch-name.separator: "-"
     target-branch: "Testing"
-    prefix: "[Testing] "
+    commit-message:
+      prefix: "[Testing] "
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -26,5 +28,6 @@ updates:
       interval: "weekly"
     pull-request-branch-name.separator: "-"
     target-branch: "unstable"
-    prefix: "[Unstable] "
+    commit-message:
+      prefix: "[Unstable] "
   
