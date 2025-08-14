@@ -1,6 +1,6 @@
 #  vim: set ft=make :
 ########################
-### aurora-apps.just
+### bazzite-disabled.just
 ########################
 ## Standardized verbs
 # configure- = configure something that is pre-installed on the image
@@ -11,3 +11,7 @@
 # foo        = no verb is used for shortcuts or something deemed important enough to use a super memorable name
 
 # Disabling the following bazzite recipe:
+_install-system-flatpaks:
+    # Disabled recipe
+    #!/usr/bin/bash
+    echo "This recipe is replaced by install-system-flatpaks and setup-flatpak-repo"
