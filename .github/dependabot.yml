@@ -9,3 +9,22 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    pull-request-branch-name.separator: "-"
+    prefix: "[main] "
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    pull-request-branch-name.separator: "-"
+    target-branch: "Testing"
+    prefix: "[Testing] "
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    pull-request-branch-name.separator: "-"
+    target-branch: "unstable"
+    prefix: "[Unstable] "
+  
