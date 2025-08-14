@@ -9,7 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    pull-request-branch-name.separator: "-"
+    pull-request-branch-name:
+      separator: "-"
     commit-message:
       prefix: "[main] "
 
@@ -17,7 +18,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    pull-request-branch-name.separator: "-"
+    pull-request-branch-name:
+      separator: "-"
     target-branch: "Testing"
     commit-message:
       prefix: "[Testing] "
@@ -26,7 +28,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    pull-request-branch-name.separator: "-"
+    pull-request-branch-name:
+      separator: "-"
     target-branch: "unstable"
     commit-message:
       prefix: "[Unstable] "
