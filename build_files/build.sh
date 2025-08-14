@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-echo 'Building bazzite-htpc:' && echo ${{ env.DEFAULT_TAG }}
+echo 'Building bazzite-htpc:testing'
 
 # echo 'Step 1 : Image-metadata'
     # /ctx/steps/01-image_metadata.sh # Later.
