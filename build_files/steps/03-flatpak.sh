@@ -2,18 +2,20 @@
 
 set -ouex pipefail
 
-echo "Defining variables"
+# ================================================================================
 
+echo "Defining variables"
 
 UPSTREAM_FLATPAK_INSTALL_FILE=https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/installer/kde_flatpaks/flatpaks
 
 DEFAULT_FOLDER=/tmp/flatpak
+
 FLATPAK_INSTALL_FILE=/usr/share/ublue-os/bazzite/flatpak/install
 FLATPAK_BLOCKLIST_FILE=/usr/share/ublue-os/flatpak-blocklist
 BAZAAR_BLOCKLIST_FILE=/usr/share/ublue-os/bazzar/blocklist.txt
 
 GIT_FLATPAK_INSTALL_FILE=/ctx/files/flatpak/install
-GIT_FLATPAK_BLOCKLIST_FILE=/ctx/files/flatpak/flatpak-blocklist
+GIT_FLATPAK_BLOCKLIST_FILE=/ctx/files/flatpak/blocklist
 GIT_BAZAAR_BLOCKLIST_FILE=/ctx/files/bazzar/blocklist
 
 # ================================================================================
@@ -30,13 +32,12 @@ cp $FLATPAK_BLOCKLIST_FILE flatpak-blocklist
 echo 'Copying upstream BAZAAR blocklist'
 cp $BAZAAR_BLOCKLIST_FILE bazzar-blocklist
 
-
 # ==================================================================================
 
 echo 'Amend upstream default flatpaks'
 
 echo 'Removing Firefox flatpak'
-sed -i '/org.mozilla.firefox/d' upstream-flatpaks
+# sed -i '/org.mozilla.firefox/d' upstream-flatpaks
 
 echo 'Removing Distroshelf flatpak'
 sed -i '/com.ranfdev.DistroShelf/d' upstream-flatpaks
