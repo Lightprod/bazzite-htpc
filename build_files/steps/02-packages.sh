@@ -48,12 +48,12 @@ echo "Enabling COPR repos"
 
 echo "Removing packages"
 
-    dnf5 remove -y $RPM_UNINSTALL_LIST
+    dnf5 remove -y $PACKAGE_REMOVE
 
 echo "Installing packages"
 
-    dnf5 install --skip-broken --skip-unavailable -y $RPM_INSTALL_LIST
-    dnf5 install --skip-broken --skip-unavailable -y $DISTANT_RPM_INSTALL_LIST
+    dnf5 install --skip-broken --skip-unavailable -y $REPO_PACKAGES_INSTALL
+    dnf5 install --skip-broken --skip-unavailable -y $DISTANT_PACKAGES_INSTALL
 
 echo "Disabling COPR repos"
 
