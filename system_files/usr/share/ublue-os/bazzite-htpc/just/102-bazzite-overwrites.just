@@ -1,6 +1,6 @@
 #  vim: set ft=make :
 ########################
-### aurora-apps.just
+### bazzite-overwrites.just
 ########################
 ## Standardized verbs
 # configure- = configure something that is pre-installed on the image
@@ -10,4 +10,6 @@
 # fix-       = apply fix/patch/workaround for something
 # foo        = no verb is used for shortcuts or something deemed important enough to use a super memorable name
 
-# Disabling the following bazzite recipe:
+# Adapting upstream recipes:
+
+
