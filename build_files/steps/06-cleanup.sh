@@ -11,6 +11,6 @@ dnf5 clean all
 echo 'Clean up temporary files'
 
 rm -rf /tmp/*
-rm -rf /var/*
+rm -rf /var/tmp/*
 # rm -rf /usr/etc
 
