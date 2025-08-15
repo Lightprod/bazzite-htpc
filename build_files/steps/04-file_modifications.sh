@@ -41,7 +41,7 @@ cat upstream-justfile
 
 echo 'Copying justfile to usr'
 
-cp upstream-justfile $JUST_CONFIG_FILE
+cp upstream-justfile $UJUST_CONFIG_FILE
 
 # ===================================================================
 
