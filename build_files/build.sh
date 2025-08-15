@@ -20,7 +20,7 @@ echo 'Step 5: Setting up additionals systemd services'
     /ctx/steps/05-systemd_services.sh
 
 echo 'Last step: Cleanup'
-    /ctx/steps/0X-cleanup.sh
+    /ctx/steps/06-cleanup.sh
 
 echo 'Commiting container...'
 
