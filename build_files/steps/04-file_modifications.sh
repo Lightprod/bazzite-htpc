@@ -9,10 +9,10 @@ DISTROSELF_DIR=/etc/skel/.var/app/com.ranfdev.DistroShelf
 UJUST_WORK_FOLDER=/tmp/ujust
 UJUST_CONFIG_FILE=/usr/share/ublue-os/justfile
 
-SYSTEMD_USER_SERVICE_FOLDER=/etc/skel/.config/systemd/user/*
-SYSTEMD_USER_SERVICE_SYSLINK_FOLDER=/etc/skel/.config/systemd/user/default.target.wants
+# SYSTEMD_USER_SERVICE_FOLDER=/etc/skel/.config/systemd/user/*
+# SYSTEMD_USER_SERVICE_SYSLINK_FOLDER=/etc/skel/.config/systemd/user/default.target.wants
 
-GIT_UJUST_CONFIG_FILE=/ctx/files/justfile
+GIT_UJUST_CONFIG_FILE=/ctx/files/just/justfile
 
 # ===================================================================
 
