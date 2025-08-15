@@ -6,7 +6,7 @@ echo "Defining variables"
 
 DISTROSELF_DIR=/etc/skel/.var/app/com.ranfdev.DistroShelf
 
-UJUST_WORK_FOLDER=/tpm/ujust
+UJUST_WORK_FOLDER=/tmp/ujust
 UJUST_CONFIG_FILE=/usr/share/ublue-os/justfile
 
 SYSTEMD_USER_SERVICE_FOLDER=/etc/skel/.config/systemd/user/*
