@@ -7,8 +7,8 @@ echo "Defining variables"
 DEFAULT_FOLDER=/tmp/dnf
 
 COPR_REPOS_FILE=/tmp/dnf/copr_repos
-RPM_INSTALL_LIST_FILE=/tmp/dnf/rpm_install
-DISTANT_RPM_INSTALL_LIST_FILE=/tmp/dnf/rpm_install
+RPM_INSTALL_LIST_FILE=/tmp/dnf/repo_rpm_install
+DISTANT_RPM_INSTALL_LIST_FILE=/tmp/dnf/distant_rpm_install
 RPM_UNINSTALL_LIST_FILE=/tmp/dnf/rpm_uninstall
 
 GIT_COPR_REPOS_FILE=/ctx/files/dnf/copr_repos
