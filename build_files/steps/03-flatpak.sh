@@ -12,11 +12,11 @@ DEFAULT_FOLDER=/tmp/flatpak
 
 FLATPAK_INSTALL_FILE=/usr/share/ublue-os/bazzite/flatpak/install
 FLATPAK_BLOCKLIST_FILE=/usr/share/ublue-os/flatpak-blocklist
-BAZAAR_BLOCKLIST_FILE=/usr/share/ublue-os/bazzar/blocklist.txt
+BAZAAR_BLOCKLIST_FILE=/usr/share/ublue-os/bazaar/blocklist.txt
 
 GIT_FLATPAK_INSTALL_FILE=/ctx/files/flatpak/install
 GIT_FLATPAK_BLOCKLIST_FILE=/ctx/files/flatpak/blocklist
-GIT_BAZAAR_BLOCKLIST_FILE=/ctx/files/bazzar/blocklist
+GIT_BAZAAR_BLOCKLIST_FILE=/ctx/files/bazaar/blocklist
 
 # ================================================================================
 
@@ -30,7 +30,7 @@ echo 'Copying upstream flatpak blocklist'
 cp $FLATPAK_BLOCKLIST_FILE flatpak-blocklist
 
 echo 'Copying upstream BAZAAR blocklist'
-cp $BAZAAR_BLOCKLIST_FILE bazzar-blocklist
+cp $BAZAAR_BLOCKLIST_FILE bazaar-blocklist
 
 # ==================================================================================
 
@@ -56,10 +56,10 @@ echo 'Amend upstream flatpak blocklist'
 cat $GIT_FLATPAK_BLOCKLIST_FILE >> flatpak-blocklist
 cat flatpak-blocklist
 
-echo 'Amend upstream bazzar blacklist'
+echo 'Amend upstream bazaar blacklist'
 
-cat $GIT_BAZAAR_BLOCKLIST_FILE >> bazzar-blocklist
-cat bazzar-blocklist
+cat $GIT_BAZAAR_BLOCKLIST_FILE >> bazaar-blocklist
+cat bazaar-blocklist
 
 # ==================================================================================
 
@@ -67,4 +67,4 @@ echo 'Copying flatpaks config files to usr'
 
 cp upstream-flatpaks $FLATPAK_INSTALL_FILE
 cp flatpak-blocklist $FLATPAK_BLOCKLIST_FILE
-cp bazzar-blocklist $BAZAAR_BLOCKLIST_FILE
+cp bazaar-blocklist $BAZAAR_BLOCKLIST_FILE
