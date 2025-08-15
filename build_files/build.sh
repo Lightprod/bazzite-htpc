@@ -27,23 +27,4 @@ echo 'Commiting container...'
 ostree container commit
 bootc container lint
 
-# echo "Installing system packages"
-# /ctx/packages_setup.sh
-
-# echo "Preparing flatpak setup"
-# /ctx/flatpaks.sh
-
-# echo "Editing users files and preferences"
-# /ctx/user_changes.sh
-
-# echo "Editing ujust database"
-# /ctx/ujust.sh
-
-# echo "Installing systemd system services"
-# /ctx/install_systemd_system.sh
-
-# echo "Installing systemd user services"
-# /ctx/install_systemd_user.sh
-
-
 
