@@ -11,66 +11,71 @@
 # foo        = no verb is used for shortcuts or something deemed important enough to use a super memorable name
 # testing    = Testing branch recipes
 
-flatpak-defaults
-    # Show default flatpak installed
+# Show default flatpak installed
+[group('System Config')]
+flatpak-defaults:
     #!/usr/bin/bash
     cat /usr/share/ublue-os/bazzite/flatpak/install
 
-flatpak-blocklist
-    # Show flatpak blocklist
+# Show flatpak blocklist
+[group('System Config')]
+flatpak-blocklist:
     #!/usr/bin/bash
     cat /usr/share/ublue-os/flatpak-blocklist
 
-bazaar-blocklist
-    # Show bazaar blocklist
-    #!/usr/bin/bash
-    cat /usr/share/ublue-os/bazzar/blocklist.txt
+# Show bazaar blocklist
+[group('System Config')]
+bazaar-blocklist:
+    #!/usr/bin/bash    
+    cat '/usr/share/ublue-os/bazaar/blocklist.txt'
 
-fix-pokemon-insurgence
-    # Fix Pokémon Insurgence's corrupted wild pokemon battle theme and fix lutris config
-    #!/usr/bin/bash
+# Fix Pokémon Insurgence's corrupted wild pokemon battle theme and fix lutris config
+[group('Games fixes')]
+fix-pokemon-insurgence:
+    #!/usr/bin/bash    
 
-rebase-testing
-    # Rebase to the testing branch
+# Rebase to the testing branch
+[group('System')]
+rebase-testing:
     #!/usr/bin/bash
-
     $branch=ghcr.io/lightprod/bazzite-htpc:testing
 
     echo 'This will rebase this install to the testing branch. Continue?'
+
     bootc switch --enforce-container-sigpolicy registry $branch
 
-rebase-latest
-    # Rebase to the testing branch
+# Rebase to the latest branch
+[group('System')]
+rebase-latest:
     #!/usr/bin/bash
 
     $branch=ghcr.io/lightprod/bazzite-htpc:latest
 
     echo 'This will rebase this install to the latest branch. Continue?'
+
     bootc switch --enforce-container-sigpolicy registry $branch
 
-# testing-disabled-recipe
-#     # For disabled recipes
-#     #!/usr/bin/bash
-#     echo 'This '$recipe' is disabled due to being unsupported or being installed by this image.'
-
-setup-flatpak-repo
-    # Enable Flathub and disable Fedora Flatpaks. Taken from Aurora's install-system-flatpak
+# Enable Flathub and disable Fedora Flatpaks. Taken from Aurora's install-system-flatpak recipe
+[group('System')]
+setup-flatpak-repo:
     #!/usr/bin/bash
 
     echo 'Enabling Flathub'
+
     flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo
 
     echo 'Disable Fedora-Flatpaks repos'
-       for remote in fedora fedora-testing; do
-           if flatpak remote-list | grep -q "$remote"; then
-               flatpak remote-delete "$remote"
-           fi
-       done
 
+    for remote in fedora fedora-testing; do
+        if flatpak remote-list | grep -q "$remote"; then
+            flatpak remote-delete "$remote"
+        fi
+    done
+
+# Set up default system flatpaks. Does not reinstall them nor updates them.
+[group('System')]
 install-system-flatpaks:
-    # Set up default system flatpaks. Does not reinstall them nor updates them.
     #!/usr/bin/bash
-
     echo 'Installing Flatpaks'
-    FLATPAK_LIST=`cat /usr/share/ublue-os/bazzite/flatpak/install`
+    FLATPAK_LIST=$(< /usr/share/ublue-os/bazzite/flatpak/install)
     flatpak install --system --assumeyes ${FLATPAK_LIST}
