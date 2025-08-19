@@ -11,7 +11,9 @@
 # foo        = no verb is used for shortcuts or something deemed important enough to use a super memorable name
 
 # Disabling the following bazzite recipe:
+
+# Disabled recipe
+[group('Disabled')]
 _install-system-flatpaks:
-    # Disabled recipe
     #!/usr/bin/bash
     echo "This recipe is replaced by install-system-flatpaks and setup-flatpak-repo"
