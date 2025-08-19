@@ -1,3 +1,4 @@
+
 deny com.heroicgameslauncher.hgl/*
 deny org.mozilla.firefox/*
 deny org.kde.konsole/*
