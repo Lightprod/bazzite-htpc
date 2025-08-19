@@ -37,7 +37,7 @@ cp $BAZAAR_BLOCKLIST_FILE bazaar-blocklist
 echo 'Amend upstream default flatpaks'
 
 echo 'Removing Firefox flatpak'
-# sed -i '/org.mozilla.firefox/d' upstream-flatpaks
+sed -i '/org.mozilla.firefox/d' upstream-flatpaks
 
 echo 'Removing Distroshelf flatpak'
 sed -i '/com.ranfdev.DistroShelf/d' upstream-flatpaks
