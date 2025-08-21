@@ -35,7 +35,7 @@ cp $GIT_UJUST_BAZZITE_HTPC_CONFIG_FILE justfile-bazzite-htpc-git
 echo 'Amend upstream justfile' # Add customs just recipes
 
 sed -i "11i$UJUST_OVERWRITES_CONFIG" upstream-justfile # Add overwrite recipes on top of imports due to bug: https://github.com/casey/just/issues/2540
-cat justfile-bazzite-git >> upstream-justfile
+cat justfile-bazzite-htpc-git >> upstream-justfile
 cat upstream-justfile
 
 echo 'Copying justfile to usr'
