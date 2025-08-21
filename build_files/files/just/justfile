@@ -1,3 +1,1 @@
-import "/usr/share/ublue-os/bazzite-htpc/just/100-bazzite-disabled.just"
 import "/usr/share/ublue-os/bazzite-htpc/just/101-bazzite-htpc.just"
-import "/usr/share/ublue-os/bazzite-htpc/just/102-bazzite-overwrites.just"

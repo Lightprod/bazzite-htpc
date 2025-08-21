@@ -13,8 +13,8 @@ echo 'Step 2: RPM packages'
 echo 'Step 3: Setting up default Flatpak install workflow'
     /ctx/steps/03-flatpak.sh
 
-echo 'Step 4: Files Modifications'
-    /ctx/steps/04-file_modifications.sh
+echo 'Step 4: Configurations'
+    /ctx/steps/04-configurations.sh
 
 echo 'Step 5: Setting up additionals systemd services'
     /ctx/steps/05-systemd_services.sh
