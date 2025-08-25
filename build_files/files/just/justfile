@@ -1,1 +1,2 @@
 import "/usr/share/ublue-os/bazzite-htpc/just/101-bazzite-htpc.just"
+import "/usr/share/ublue-os/bazzite-htpc/just/102-bazzite-htpc-pwa.just"
