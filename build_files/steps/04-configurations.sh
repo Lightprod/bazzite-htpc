@@ -9,12 +9,11 @@ DISTROSELF_DIR=/etc/skel/.var/app/com.ranfdev.DistroShelf
 UJUST_WORK_FOLDER=/tmp/ujust
 UJUST_CONFIG_FILE=/usr/share/ublue-os/justfile
 
-# SYSTEMD_USER_SERVICE_FOLDER=/etc/skel/.config/systemd/user/*
-# SYSTEMD_USER_SERVICE_SYSLINK_FOLDER=/etc/skel/.config/systemd/user/default.target.wants
-
 GIT_UJUST_BAZZITE_HTPC_CONFIG_FILE=/ctx/files/just/justfile
 GIT_UJUST_OVERWRITES_CONFIG_FILE=/ctx/files/just/justfile-overwrites
 UJUST_OVERWRITES_CONFIG=$(< $GIT_UJUST_OVERWRITES_CONFIG_FILE) 
+
+
 # ===================================================================
 
 # Remove default DistroShelf config
@@ -44,5 +43,3 @@ cp upstream-justfile $UJUST_CONFIG_FILE
 
 # ===================================================================
 
-# mkdir ${SYSTEMD_USER_SERVICE_SYSLINK_FOLDER}
-# cp $SYSTEMD_USER_SERVICE_FOLDER $SYSTEMD_USER_SERVICE_SYSLINK_FOLDER
