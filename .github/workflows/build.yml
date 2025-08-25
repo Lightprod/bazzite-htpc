@@ -20,12 +20,12 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_DESC: "My Customized Bazzite-deck image based on Ublue's image template. For testing only"
+  IMAGE_DESC: "My Customized Bazzite-deck image based on Ublue's image template. Unstable branch for experiments"
   IMAGE_KEYWORDS: "bootc,ublue,universal-blue,bazzite"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
   IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "testing"
+  DEFAULT_TAG: "unstable"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
@@ -144,7 +144,7 @@ jobs:
       # They also check if the runner is on the default branch so that things like the merge queue (if you enable it), are going to work
       - name: Login to GitHub Container Registry
         uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3
-        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
+        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing","refs/heads/unstable"]'), github.ref)
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -152,7 +152,7 @@ jobs:
 
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
-        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
+        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing","refs/heads/unstable"]'), github.ref)
         id: push
         env:
           REGISTRY_USER: ${{ github.actor }}
@@ -170,10 +170,10 @@ jobs:
       # to consume. For more details, review the image signing section of the README.
       - name: Install Cosign
         uses: sigstore/cosign-installer@d58896d6a1865668819e1d91763c7751a165e159 # v3.9.2
-        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
+        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing","refs/heads/unstable"]'), github.ref)
 
       - name: Sign container image
-        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing"]'), github.ref)
+        if: github.event_name != 'pull_request' && contains(fromJson('["refs/heads/main", "refs/heads/Testing","refs/heads/unstable"]'), github.ref)
         run: |
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
           for tag in ${{ steps.metadata.outputs.tags }}; do
