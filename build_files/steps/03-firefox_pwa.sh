@@ -14,7 +14,7 @@ echo "Enable the repository"
 #     dnf5 -q makecache -y --disablerepo="*" --enablerepo="firefoxpwa"
 
 echo "Install the package"
-    dnf5 install firefoxpwa
+    dnf5 install --skip-broken --skip-unavailable -y firefoxpwa 
 
 echo "Disable the repository"
     dnf5 config-manager setopt firefoxpwa.enabled=0
