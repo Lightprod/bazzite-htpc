@@ -24,8 +24,8 @@ install-youtube-pwa:
     #!/usr/bin/bash
     echo 'Creating a youtube profile'
 
-    firefoxpwa profile create --name Youtube --description "Profile for youtube.com" >> /tpm/firefowpwa-output-youtube
-    cat /tpm/firefowpwa-output-youtube | grep -o "01.*" >> ~/.local/share/firefoxpwa/profiles/id-youtube.txt
+    firefoxpwa profile create --name Youtube --description "Profile for youtube.com" >> /tpm/firefoxpwa-output-youtube
+    cat /tpm/firefoxpwa-output-youtube | grep -o "01.*" >> ~/.local/share/firefoxpwa/profiles/id-youtube.txt
 
     YOUTUBE_PROFILE_ID=$(< ~/.local/share/firefoxpwa/profiles/id-youtube.txt)
 
