@@ -12,11 +12,40 @@
 # start      = start a program.
 # testing    = Testing branch recipes
 
+# Setup firefox pwa
+[group('Experiment - Web Apps')]
+install-firefox-pwa:
+    #!/usr/bin/bash
+
+    USER_ABSOLUTE_PATH=$(realpath ~/.mozilla/firefox/firefox-pwa-test)
+    FIREFOX_PROFILE_NAME=firefox-pwa-test
+    FIREFOX_PROFILE_FULL="${FIREFOX_PROFILE_NAME} ${USER_ABSOLUTE_PATH}"
+
+    echo 'Creating a specific profile for firefox-pwa'
+
+    firefox -createprofile "${FIREFOX_PROFILE_FULL}" -no-remote
+    nohup firefox -P $FIREFOX_PROFILE_NAME -headless & disown
+    pkill -f firefox
+
+    echo 'firefox-pwa profile installed'
+    echo 'Installing firefox-pwa extension'
+    
+    cd $USER_ABSOLUTE_PATH/extensions/
+    wget https://addons.mozilla.org/firefox/downloads/latest/firefoxpwa@filips.si/latest.xpi -O firefoxpwa@filips.si.xpi
+
+    echo 'Installing ublock-origin extension'
+    wget https://addons.mozilla.org/firefox/downloads/latest/uBlock0@raymondhill.net/latest.xpi -O uBlock0@raymondhill.net
+
+    echo 'Installing firefox-pwa runtime'
+    firefoxpwa runtime install
+
+    echo 'Firefox-pwa is installed.'
+
 # Start Firefox for installing custom PWA
 [group('Experiment - Web Apps')]
 start-firefox-pwa:
     #!/usr/bin/bash
-    nohup firefox -P firefox-pwa &
+    nohup firefox -P firefox-pwa -no-remote & disown
 
 # Install Youtube as a PWA
 [group('Experiment - Web Apps')]
