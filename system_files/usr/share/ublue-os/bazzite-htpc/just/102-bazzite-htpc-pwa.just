@@ -25,7 +25,7 @@ setup-firefox-pwa:
     echo 'Creating a specific profile for firefox-pwa'
 
     firefox -createprofile "${FIREFOX_PROFILE_FULL}" -no-remote
-    nohup firefox -P $FIREFOX_PROFILE_NAME -headless & kill `pidof firefox`
+    nohup firefox -P $FIREFOX_PROFILE_NAME -headless & wait 3s & kill `pidof firefox`
 
     
     echo 'firefox-pwa profile installed'
@@ -51,7 +51,7 @@ setup-firefox-pwa:
 [group('Experiment - Web Apps')]
 start-firefox-pwa:
     #!/usr/bin/bash
-    nohup firefox -P firefox-pwa -no-remote &
+    nohup firefox -P firefox-pwa -no-remote >&/dev/null &
 
 # Install Youtube as a PWA
 [group('Experiment - Web Apps')]
@@ -79,6 +79,17 @@ install-youtube-pwa:
 install-youtube-pwa-v2:
     #!/usr/bin/bash
 
+    # Profiles Variables
+    PROFILE_NAME=Youtube
+    PROFILE_DESCRIPTION="Profile for youtube.com"
+    PWA_PROFILE_ID=""
+
+    # PWA Variables
+    PWA_NAME=Youtube
+    PWA_ID=""
+    PWA_MANIFEST_URL="https://www.youtube.com/manifest.webmanifest"
+    PWA_SHORTCUT=""
+
     # Files variables
     ID_FOLDER=~/.local/share/firefoxpwa/.id
     TEMP_FOLDER=/tmp/firefoxpwa
@@ -89,16 +100,6 @@ install-youtube-pwa-v2:
     PWA_ID_TEMP_FILE="${TEMP_FOLDER}/output-pwa"
     PWA_ID_FILE="${PWA_ID_FOLDER}/${PWA_NAME,,}"
 
-    # Profiles Variables
-    PROFILE_NAME=Youtube
-    PROFILE_DESCRIPTION="Profile for youtube.com"
-    PWA_PROFILE_ID=""
-
-    # PWA Variables
-    PWA_NAME="Youtube"
-    PWA_PROFILE_ID=""
-    PWA_MANIFEST_URL="https://www.youtube.com/manifest.webmanifest"
-    PWA_SHORTCUT=""
 
     # Checking if firefox-pwa is setup
 
@@ -126,10 +127,19 @@ install-youtube-pwa-v2:
         mkdir $PWA_ID_FOLDER
     fi
 
+    # Checking if steam is running else start it
+    
+    if ! pgrep -x "steam" >> /dev/null ; then
+        echo "Steam is not running. Starting Steam..."
+        nohup steam >&/dev/null &
+        sleep 5s
+    fi
+
     echo "Creating a profile for ${PWA_NAME}"
 
     mkdir /tmp/firefoxpwa
-    firefoxpwa profile create --name $PROFILE_NAME --description $PROFILE_DESCRIPTION >> $PROFILE_ID_TEMP_FILE
+
+    firefoxpwa profile create --name "${PROFILE_NAME}" --description "${PROFILE_DESCRIPTION}" >> $PROFILE_ID_TEMP_FILE
     cat $PROFILE_ID_TEMP_FILE | grep -o "01.*" >> $PROFILE_ID_FILE
 
     PWA_PROFILE_ID=$(< $PROFILE_ID_FILE)
@@ -138,16 +148,26 @@ install-youtube-pwa-v2:
 
     echo "Installing ${PWA_NAME} PWA"
 
-    firefoxpwa site install $PWA_MANIFEST_URL --profile $PWA_PROFILE_ID >> $PWA_ID_TEMP_FILE
+    firefoxpwa site install "${PWA_MANIFEST_URL}" --profile "${PWA_PROFILE_ID}" >> $PWA_ID_TEMP_FILE
     cat $PWA_ID_TEMP_FILE | grep -o "01.*" >> $PWA_ID_FILE
     
+    PWA_ID=$(< $PWA_ID_FILE)
+
+    PWA_SHORTCUT="FFPWA-$PWA_ID.desktop"
+
     # checking if the pwa shortcut is installed
-    PWA_SHORTCUT="*$(cat $PWA_ID_FILE)*"
 
     cd ~/.local/share/applications/
+
     if [ ! -f "$PWA_SHORTCUT" ]; then
         echo "${PWA_NAME} PWA installation failed..."
+        installed=false
     else
+        echo "${PWA_NAME} PWA is installed."
+        installed=true
+    fi
+
+    if "$installed" = true; then
         steamos-add-to-steam $PWA_SHORTCUT # For gaming mode
         echo "Added ${PWA_NAME} to Steam."
     fi
@@ -157,4 +177,5 @@ install-youtube-pwa-v2:
     rm $PROFILE_ID_TEMP_FILE
     rm $PWA_ID_TEMP_FILE
 
-    echo "${PWA_NAME} PWA is installed."
+    echo "Installation finished"
+    
