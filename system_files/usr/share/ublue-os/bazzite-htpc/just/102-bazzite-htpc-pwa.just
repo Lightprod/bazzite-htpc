@@ -17,6 +17,7 @@
 setup-firefox-pwa:
     #!/usr/bin/bash
 
+
     USER_ABSOLUTE_PATH=$HOME/.mozilla/firefox
     FIREFOX_PROFILE_NAME=firefox-pwa
     FIREFOX_PROFILE_PATH="${USER_ABSOLUTE_PATH}/${FIREFOX_PROFILE_NAME}"
@@ -41,7 +42,7 @@ setup-firefox-pwa:
 
     echo 'Installing firefox-pwa runtime'
     firefoxpwa runtime install
-
+    
     echo 'Preconfiguring firefox-pwa id folder'
     mkdir ~/.local/share/firefoxpwa/.id
 
@@ -69,7 +70,8 @@ install-youtube-pwa:
 
     echo 'Installing Youtube PWA'
 
-    firefoxpwa site install https://www.youtube.com/manifest.webmanifest --profile $YOUTUBE_PROFILE_ID >> /tmp/firefoxpwa
+    firefoxpwa site install https://www.youtube.com/manifest.webmanifest --profile $YOUTUBE_PROFILE_ID # Besoin de capturer l'ID du PWA wtf
+
     rm /tmp/firefoxpwa-output-youtube
 
     echo 'Youtube PWA installed.'
