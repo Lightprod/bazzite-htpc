@@ -10,8 +10,8 @@ echo 'Building bazzite-htpc:testing'
 echo 'Step 2: RPM packages'
     /ctx/steps/02-packages.sh
 
-echo 'Step 3: Installing Firefox PWA'
-    /ctx/steps/03-firefox_pwa.sh
+# echo 'Step 3: Installing Firefox PWA'
+    # /ctx/steps/03-firefox_pwa.sh
 
 echo 'Step 3: Setting up default Flatpak install workflow'
     /ctx/steps/03-flatpak.sh
