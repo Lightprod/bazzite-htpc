@@ -1,6 +1,6 @@
 #  vim: set ft=make :
 ########################
-### bazzite-htpc-pwa.just
+### bazzite-htpc-testing.just
 ########################
 ## Standardized verbs
 # configure- = configure something that is pre-installed on the image
@@ -47,13 +47,151 @@ setup-firefox-pwa:
 
     echo 'Firefox-pwa is installed.'
 
-# Start Firefox with an specific profile for installing custom PWA
+# Start Firefox for installing custom PWA
 [group('Experiment - Web Apps')]
 start-firefox-pwa:
     #!/usr/bin/bash
     nohup firefox -P firefox-pwa -no-remote >&/dev/null &
+
+# Install Youtube as a PWA
+# [group('Experiment - Web Apps')]
+# install-youtube-pwa:
+#     #!/usr/bin/bash
+
+#     echo 'Creating a youtube profile'
+
+#     firefoxpwa profile create --name Youtube --description "Profile for youtube.com" >> /tmp/firefoxpwa-output-youtube
+#     cat /tmp/firefoxpwa-output-youtube | grep -o "01.*" >> ~/.local/share/firefoxpwa/.profiles-id/id-youtube.txt
+
+#     YOUTUBE_PROFILE_ID=$(< ~/.local/share/firefoxpwa/.profiles-id/id-youtube.txt)
+
+#     echo 'Youtube profile has been created with profile id ' && echo $YOUTUBE_PROFILE_ID
+
+#     echo 'Installing Youtube PWA'
+
+#     firefoxpwa site install https://www.youtube.com/manifest.webmanifest --profile $YOUTUBE_PROFILE_ID # Besoin de capturer l'ID du PWA wtf
+
+#     rm /tmp/firefoxpwa-output-youtube
+
+#     echo 'Youtube PWA installed.'
+
+# Install Youtube as a PWA
+[group('Experiment - Web Apps')]
+install-youtube-pwa-v2:
+    #!/usr/bin/bash
+
+    # Profiles Variables
+    PROFILE_NAME=Youtube
+    PROFILE_DESCRIPTION="Profile for youtube.com"
+    PWA_PROFILE_ID=""
+
+    # PWA Variables
+    PWA_NAME=Youtube
+    PWA_ID=""
+    PWA_MANIFEST_URL="https://www.youtube.com/manifest.webmanifest"
+    PWA_SHORTCUT=""
+
+    # Files variables
+    ID_FOLDER=~/.local/share/firefoxpwa/.id
+    TEMP_FOLDER=/tmp/firefoxpwa
+    PROFILE_ID_FOLDER="${ID_FOLDER}/profiles"
+    PWA_ID_FOLDER="${ID_FOLDER}/pwa"
+    PROFILE_ID_TEMP_FILE="${TEMP_FOLDER}/output-profile"
+    PROFILE_ID_FILE="${PROFILE_ID_FOLDER}/${PROFILE_NAME,,}"
+    PWA_ID_TEMP_FILE="${TEMP_FOLDER}/output-pwa"
+    PWA_ID_FILE="${PWA_ID_FOLDER}/${PWA_NAME,,}"
+
+
+    # Checking if firefox-pwa is setup
+
+    if [ ! -d "$ID_FOLDER" ]; then
+        # echo "Firefox-pwa is not setup, please run ujust setup-firefox-pwa before. Aborting!"
+        # exit 0
+
+        echo "Firefox-pwa is not setup correctly, running setup-firefox-pwa"
+        sleep 1s
+        ujust setup-firefox-pwa
+        sleep 3s
+
+        if [ ! -d "$ID_FOLDER" ]; then
+            echo "Firefox-pwa setup failed. Please delete the firefoxpwa profile folder and retry. Aborting!"
+            exit 0
+        fi
+        echo "Firefox-pwa is setup correctly, resuming pwa setup"
+    fi
+
+    # Checking if the pwa exist
+
+    if [ -f "$PWA_ID_FILE" ]; then
+        echo "$PWA_ID_FILE is already installed. Aborting!"
+        exit 0
+    fi
+
+    # Checking if the directories exists
+
+    if [ ! -d "$PROFILE_ID_FOLDER" ]; then
+        echo "$PROFILE_ID_FOLDER does not exist. Creating directory..."
+        mkdir $PROFILE_ID_FOLDER
+    fi
     
-# Use firefoxpwa to install websites as a application
+    if [ ! -d "$PWA_ID_FOLDER" ]; then
+        echo "$PWA_ID_FOLDER does not exist. Creating directory..."
+        mkdir $PWA_ID_FOLDER
+    fi
+
+    # Checking if steam is running else start it
+    
+    if ! pgrep -x "steam" >> /dev/null ; then
+        echo "Steam is not running. Starting Steam..."
+        nohup steam >&/dev/null &
+        sleep 5s
+    fi
+
+    echo "Creating a profile for ${PWA_NAME}"
+
+    mkdir /tmp/firefoxpwa
+
+    firefoxpwa profile create --name "${PROFILE_NAME}" --description "${PROFILE_DESCRIPTION}" >> $PROFILE_ID_TEMP_FILE
+    cat $PROFILE_ID_TEMP_FILE | grep -o "01.*" >> $PROFILE_ID_FILE
+
+    PWA_PROFILE_ID=$(< $PROFILE_ID_FILE)
+
+    echo "Profile for ${PWA_NAME} has been created with profile id $PWA_PROFILE_ID"
+
+    echo "Installing ${PWA_NAME} PWA"
+
+    firefoxpwa site install "${PWA_MANIFEST_URL}" --profile "${PWA_PROFILE_ID}" >> $PWA_ID_TEMP_FILE
+    cat $PWA_ID_TEMP_FILE | grep -o "01.*" >> $PWA_ID_FILE
+    
+    PWA_ID=$(< $PWA_ID_FILE)
+
+    PWA_SHORTCUT="FFPWA-$PWA_ID.desktop"
+
+    # checking if the pwa shortcut is installed
+
+    cd ~/.local/share/applications/
+
+    if [ ! -f "$PWA_SHORTCUT" ]; then
+        echo "${PWA_NAME} PWA installation failed..."
+        installed=false
+    else
+        echo "${PWA_NAME} PWA is installed."
+        installed=true
+    fi
+
+    if "$installed" = true; then
+        steamos-add-to-steam $PWA_SHORTCUT # For gamescope or BPM
+        echo "Added ${PWA_NAME} to Steam."
+    fi
+
+    echo "Cleaning up temporary files..."
+
+    rm $PROFILE_ID_TEMP_FILE
+    rm $PWA_ID_TEMP_FILE
+
+    echo "Installation finished"
+    
+# Install websites as a application
 [group('Experiment - Web Apps')]
 get-web-app app="":
     #!/usr/bin/bash
@@ -101,8 +239,18 @@ get-web-app app="":
             "Plex (IP)" \
             "Plex (plex.tv)" \
             "Jellyfin Media Player" \
-            "Spotify" \
+            `# "Netflix" \
+            # "Amazon Prime Video" \
+            # "Disney Plus" \
+            # "Apple TV" \
+            # "HBO Max" \
+            # "Paramount Plus" \
+            # "Spotify" \
+            # "Crunchyroll" \
+            # "ADN (Animation Digital Network)" \
+            # "HIDIVE"` \
             "Steam (Web)" \
+            "Custom" \
             "Cancel")
     fi
     # Exit if Cancel is selected
@@ -125,6 +273,8 @@ get-web-app app="":
         # Checking if firefox-pwa is setup
 
         if [ ! -d "$ID_FOLDER" ]; then
+            # echo "Firefox-pwa is not setup, please run ujust setup-firefox-pwa before. Aborting!"
+            # exit 0
 
             echo "Firefox-pwa is not setup correctly, running setup-firefox-pwa"
             sleep 1s
@@ -170,7 +320,9 @@ get-web-app app="":
             sleep 5s
         fi
 
-        # Creating an profile for the PWA if it does not exist
+        # echo "Creating a profile for ${PWA_NAME}"
+
+        # mkdir /tmp/firefoxpwa
 
         if [ ! -d "$PROFILE_ID_FILE" ]; then
             echo "No Profile for ${PWA_NAME} found. Creating profile."
@@ -208,6 +360,8 @@ get-web-app app="":
         fi
 
         if ["$INSTALLED" = true] && ["$ADD_TO_STEAM"=true]; then
+            # steamos-add-to-steam $PWA_SHORTCUT # For gamescope or BPM
+            # echo "Added ${PWA_NAME} to Steam."
             add_to_steam
         fi
 
@@ -237,6 +391,8 @@ get-web-app app="":
         fi
 
         if ["$INSTALLED" = true] && ["$ADD_TO_STEAM"=true]; then
+            # steamos-add-to-steam $PWA_SHORTCUT # For gamescope or BPM
+            # echo "Added ${PWA_NAME} to Steam."
             add_to_steam
         fi
     }
@@ -259,6 +415,32 @@ get-web-app app="":
 
     }
 
+    # TBC
+    # install_custom(){
+    #     echo -e "Do you want to create an PWA using an template app? (Youtube, Twitch, etc...)"
+    #     $SELECTION_TEMPLATE=$(ugum choose \
+    #         "Yes" \
+    #         "No" \
+    #         "Cancel")
+        
+    #     # Exit if Cancel is selected
+    
+    #     Case"$SELECTION_TEMPLATE" in
+    #         "Yes")
+    #             ;;
+    #         "No")
+    #             ;;
+    #         "Cancel")
+    #             echo "Exiting..."
+    #             exit 0
+    #             ;;
+    #         *)
+    #              echo "Invalid selection. Aborting!"
+    #             exit 1
+    #             ;;
+    #     fi
+
+    }
     # Process user's selection
     case "$SELECTION" in
         "Youtube" | "Youtube Music")
@@ -376,6 +558,23 @@ get-web-app app="":
 
             install_pwa
             ;;
+        # "Custom")
+        #     IS_PWA=true
+
+        #     install_custom()
+
+            # Profile Variables
+            # PROFILE_NAME=$(gum input --prompt="Enter the address of your plex server: " --placeholder="http://<ip.adress:port> or http://<domain.address:port>" --prompt.italic --prompt.foreground 10 --cursor.foreground 10)
+            # PROFILE_NAME=$(gum input --prompt="Enter the address of your plex server: " --placeholder="http://<ip.adress:port> or http://<domain.address:port>" --prompt.italic --prompt.foreground 10 --cursor.foreground 10)
+
+
+
+            # PWA_MANIFEST_URL=$(gum input --prompt="Enter the address of your plex server: " --placeholder="http://<ip.adress:port> or http://<domain.address:port>" --prompt.italic --prompt.foreground 10 --cursor.foreground 10)
+            #         if ! echo "$PWA_MANIFEST_URL" | grep -q -e "http://" -e "https://"; then
+            #             echo "Incorrect syntax. Aborting!"
+            #             exit code 1
+            #         fi
+            # ;;
         *)
             echo "Invalid selection. Aborting!"
             exit 1
