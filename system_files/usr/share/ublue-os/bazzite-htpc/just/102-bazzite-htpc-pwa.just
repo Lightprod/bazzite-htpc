@@ -49,9 +49,9 @@ setup-firefox-pwa:
 
 # Start Firefox with an specific profile for installing custom PWA
 [group('Experiment - Web Apps')]
-start-firefox-pwa:
+start-firefox-pwa website="":
     #!/usr/bin/bash
-    nohup firefox -P firefox-pwa -no-remote >&/dev/null &
+    nohup firefox -P firefox-pwa ${website} -no-remote >&/dev/null &
     
 # Use firefoxpwa to install websites as a application
 [group('Experiment - Web Apps')]
@@ -278,17 +278,19 @@ get-web-app app="":
             install_pwa
             ;;
         "Twitch")
-            IS_PWA=true
+            # IS_PWA=true
 
             # Profile Variables
-            PROFILE_NAME=Twitch
-            PROFILE_DESCRIPTION="Profile used for Twitch"
+            # PROFILE_NAME=Twitch
+            # PROFILE_DESCRIPTION="Profile used for Twitch"
 
             # PWA Variables
             PWA_NAME=Twitch
             PWA_MANIFEST_URL="https://www.twitch.tv"
 
-            install_pwa
+            # install_pwa
+            echo "${PWA_NAME} is not installable through the shell. Install it through the addon. Starting firefox..."
+            ujust start-firefox-pwa ${PWA_MANIFEST_URL}
             ;;
         "Plex (IP)" | "Plex (plex.tv)")
             IS_PWA=true
