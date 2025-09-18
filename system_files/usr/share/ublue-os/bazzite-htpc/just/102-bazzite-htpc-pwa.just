@@ -95,7 +95,7 @@ get-web-app app="":
         SELECTION=$(ugum choose \
             "Youtube" \
             "Youtube Music" \
-            "Twitch" \
+            "Twitch (/!\ Manual)" \
             "Plex Media Player" \
             "Plex HTPC" \
             "Plex amp" \
@@ -208,7 +208,9 @@ get-web-app app="":
             INSTALLED=true
         fi
 
-        if ["$INSTALLED" = true] && ["$ADD_TO_STEAM"=true]; then
+        if [ "$INSTALLED" = true]  && [ "$ADD_TO_STEAM"=true ]; then
+            APP_SHORTCUT="${PWA_SHORTCUT_FOLDER}${PWA_SHORTCUT}"
+            APP_NAME="${PWA_NAME}"
             add_to_steam
         fi
 
@@ -224,43 +226,36 @@ get-web-app app="":
         local INSTALLED=false
 
         if flatpak list | grep -q "${FLATPAK_ID}" ; then
-            echo "${FLATAPK_NAME} is already installed"
+            echo "${FLATPAK_NAME} is already installed"
             INSTALLED=true
         else
             if flatpak install --system -y "${FLATPAK_ID}"; then
-                echo "${FLATAPK_NAME} is installed"
+                echo "${FLATPAK_NAME} is installed"
                 INSTALLED=true
             else
-                echo "Failed to install ${FLATAPK_NAME}. Please try again or install manually with:"
+                echo "Failed to install ${FLATPAK_NAME}. Please try again or install manually with:"
                 echo "flatpak install --system ${FLATPAK_ID}"
                 INSTALLED=false
             fi
         fi
 
         if ["$INSTALLED" = true] && ["$ADD_TO_STEAM" = true]; then
+            APP_SHORTCUT="${FLATPAK_SHORTCUT}"
+            APP_NAME="${FLATPAK_NAME}"
             add_to_steam
         fi
     }
 
     # Adding installed pwa to steam
     add_to_steam(){
-        local APP_SHORTCUT=""
-        local APP_NAME=""
-
-        if "$IS_PWA" = true; then
-            APP_SHORTCUT="${PWA_SHORTCUT_FOLDER}${PWA_SHORTCUT}"
-            APP_NAME="${PWA_NAME}"
-        elif "$IS_FLATPAK" = true; then
-            APP_SHORTCUT="${FLATPAK_SHORTCUT}"
-            APP_NAME="${FLATPAK_NAME}"
-        fi
-
-        steamos-add-to-steam $APP_SHORTCUT # For gamescope or BPM
+        steamos-add-to-steam "${APP_SHORTCUT}" # For gamescope or BPM
         echo "Added ${APP_NAME} to Steam."
     }
 
     # Start firefoxpwa profile for terminal incompatible apps
     start_firefoxpwa(){
+        
+        echo "${PWA_NAME} is not installable through the shell. Install it through the addon. Starting firefox..."
         nohup firefox -P firefox-pwa "${PWA_MANIFEST_URL}" -no-remote >&/dev/null &
     }
 
@@ -283,42 +278,37 @@ get-web-app app="":
 
             install_pwa
             ;;
-        "Twitch")
-            # IS_PWA=true
-
-            # Profile Variables
-            # PROFILE_NAME=Twitch
-            # PROFILE_DESCRIPTION="Profile used for Twitch"
-
+        "Twitch (/!\ Manual)")
             # PWA Variables
+
             PWA_NAME=Twitch
             PWA_MANIFEST_URL="https://www.twitch.tv"
 
-            # install_pwa
-            echo "${PWA_NAME} is not installable through the shell. Install it through the addon. Starting firefox..."
-            # ujust start-firefox-pwa "${PWA_MANIFEST_URL}"
-
+            start_firefoxpwa
             ;;
-        "Plex (IP)" | "Plex (plex.tv)")
+        "Plex (IP)" | "Plex (plex.tv /!\ Manual)")
             IS_PWA=true
 
-            # Profile Variables
-            PROFILE_NAME="Plex"
-            PROFILE_DESCRIPTION="Profile used for Plex"
-
-            # PWA Variables
             if [ "$SELECTION" = "Plex (IP)"]; then
+                # Profile Variables
+                PROFILE_NAME="Plex"
+                PROFILE_DESCRIPTION="Profile used for Plex"
+
+                # PWA Variables
                 PWA_NAME="Plex (Web)"
                 PWA_MANIFEST_URL=$(gum input --prompt="Enter the address of your plex server: " --placeholder="http://<ip.adress:port> or http://<domain.address:port>" --prompt.italic --prompt.foreground 10 --cursor.foreground 10)
                     if ! echo "$PWA_MANIFEST_URL" | grep -q -e "http://" -e "https://"; then
                         echo "Incorrect syntax. Aborting!"
                         exit code 1
                     fi
+                install_pwa
             else
+                # PWA Variables
                 PWA_NAME="Plex (plex.tv)"
                 PWA_MANIFEST_URL="https://app.plex.tv/desktop"
+                start_firefoxpwa
             fi
-            install_pwa
+
             ;;
         "Plex Media Player")
             IS_FLATPAK=true
@@ -375,14 +365,15 @@ get-web-app app="":
             ADD_TO_STEAM=false # Forced to false as it makes no sense to be in gaming mode
 
             # Profile Variables
-            PROFILE_NAME="Steam"
-            PROFILE_DESCRIPTION="Profile used for Steam"
+            # PROFILE_NAME="Steam"
+            # PROFILE_DESCRIPTION="Profile used for Steam"
 
             # # PWA Variables
             PWA_NAME="Steam (Web)"
             PWA_MANIFEST_URL="https://store.steampowered.com"
-
-            install_pwa
+            
+            start_firefoxpwa
+            # install_pwa
             ;;
         *)
             echo "Invalid selection. Aborting!"
