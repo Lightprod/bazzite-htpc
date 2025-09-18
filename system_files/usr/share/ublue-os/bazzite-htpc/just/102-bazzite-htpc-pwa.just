@@ -49,9 +49,10 @@ setup-firefox-pwa:
 
 # Start Firefox with an specific profile for installing custom PWA
 [group('Experiment - Web Apps')]
-start-firefox-pwa website="":
+start-firefox-pwa url="":
     #!/usr/bin/bash
-    nohup firefox -P firefox-pwa ${website} -no-remote >&/dev/null &
+    WEBSITE_URL= "{{ url }}"
+    nohup firefox -P firefox-pwa ${WEBSITE_URL} -no-remote >&/dev/null &
     
 # Use firefoxpwa to install websites as a application
 [group('Experiment - Web Apps')]
