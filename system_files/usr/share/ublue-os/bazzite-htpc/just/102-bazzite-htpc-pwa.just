@@ -49,9 +49,10 @@ setup-firefox-pwa:
 
 # Start Firefox with an specific profile for installing custom PWA
 [group('Experiment - Web Apps')]
-start-firefox-pwa:
+start-firefox-pwa url="":
     #!/usr/bin/bash
-    nohup firefox -P firefox-pwa -no-remote >&/dev/null &
+    WEBSITE_URL= "{{ url }}"
+    nohup firefox -P firefox-pwa ${WEBSITE_URL} -no-remote >&/dev/null &
     
 # Use firefoxpwa to install websites as a application
 [group('Experiment - Web Apps')]
@@ -107,7 +108,7 @@ get-web-app app="":
     fi
     # Exit if Cancel is selected
     
-    if [ "$SELECTION"= "Cancel" ]; then
+    if [ "$SELECTION" = "Cancel" ]; then
         echo "Exiting..."
         exit 
     fi
@@ -236,7 +237,7 @@ get-web-app app="":
             fi
         fi
 
-        if ["$INSTALLED" = true] && ["$ADD_TO_STEAM"=true]; then
+        if ["$INSTALLED" = true] && ["$ADD_TO_STEAM" = true]; then
             add_to_steam
         fi
     }
@@ -246,17 +247,16 @@ get-web-app app="":
         local APP_SHORTCUT=""
         local APP_NAME=""
 
-        if "$IS_PWA"= true; then
+        if "$IS_PWA" = true; then
             APP_SHORTCUT="${PWA_SHORTCUT_FOLDER}${PWA_SHORTCUT}"
             APP_NAME="${PWA_NAME}"
-        else if "$IS_FLATPAK"= true; then
+        else if "$IS_FLATPAK" = true; then
             APP_SHORTCUT="${FLATPAK_SHORTCUT}"
             APP_NAME="${FLATPAK_NAME}"
         fi
 
         steamos-add-to-steam $APP_SHORTCUT # For gamescope or BPM
         echo "Added ${APP_NAME} to Steam."
-
     }
 
     # Process user's selection
@@ -270,7 +270,7 @@ get-web-app app="":
 
             # PWA Variables
             PWA_NAME="$SELECTION"
-            if "$PWA_NAME"= "Youtube"; then
+            if "$PWA_NAME" = "Youtube"; then
                 PWA_MANIFEST_URL="https://www.youtube.com/manifest.webmanifest"
             else
                 PWA_MANIFEST_URL="https://music.youtube.com/manifest.webmanifest"
@@ -279,17 +279,19 @@ get-web-app app="":
             install_pwa
             ;;
         "Twitch")
-            IS_PWA=true
+            # IS_PWA=true
 
             # Profile Variables
-            PROFILE_NAME=Twitch
-            PROFILE_DESCRIPTION="Profile used for Twitch"
+            # PROFILE_NAME=Twitch
+            # PROFILE_DESCRIPTION="Profile used for Twitch"
 
             # PWA Variables
             PWA_NAME=Twitch
             PWA_MANIFEST_URL="https://www.twitch.tv"
 
-            install_pwa
+            # install_pwa
+            echo "${PWA_NAME} is not installable through the shell. Install it through the addon. Starting firefox..."
+            ujust start-firefox-pwa ${PWA_MANIFEST_URL}
             ;;
         "Plex (IP)" | "Plex (plex.tv)")
             IS_PWA=true
