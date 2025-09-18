@@ -52,7 +52,7 @@ setup-firefox-pwa:
 start-firefox-pwa url="":
     #!/usr/bin/bash
     WEBSITE_URL= "{{ url }}"
-    nohup firefox -P firefox-pwa ${WEBSITE_URL} -no-remote >&/dev/null &
+    nohup firefox -P firefox-pwa "${WEBSITE_URL}" -no-remote >&/dev/null &
     
 # Use firefoxpwa to install websites as a application
 [group('Experiment - Web Apps')]
@@ -250,13 +250,18 @@ get-web-app app="":
         if "$IS_PWA" = true; then
             APP_SHORTCUT="${PWA_SHORTCUT_FOLDER}${PWA_SHORTCUT}"
             APP_NAME="${PWA_NAME}"
-        else if "$IS_FLATPAK" = true; then
+        elif "$IS_FLATPAK" = true; then
             APP_SHORTCUT="${FLATPAK_SHORTCUT}"
             APP_NAME="${FLATPAK_NAME}"
         fi
 
         steamos-add-to-steam $APP_SHORTCUT # For gamescope or BPM
         echo "Added ${APP_NAME} to Steam."
+    }
+
+    # Start firefoxpwa profile for terminal incompatible apps
+    start_firefoxpwa(){
+        nohup firefox -P firefox-pwa "${PWA_MANIFEST_URL}" -no-remote >&/dev/null &
     }
 
     # Process user's selection
@@ -291,7 +296,8 @@ get-web-app app="":
 
             # install_pwa
             echo "${PWA_NAME} is not installable through the shell. Install it through the addon. Starting firefox..."
-            ujust start-firefox-pwa ${PWA_MANIFEST_URL}
+            # ujust start-firefox-pwa "${PWA_MANIFEST_URL}"
+
             ;;
         "Plex (IP)" | "Plex (plex.tv)")
             IS_PWA=true
