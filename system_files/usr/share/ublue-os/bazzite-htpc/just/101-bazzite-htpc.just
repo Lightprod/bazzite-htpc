@@ -57,7 +57,7 @@ rebase-latest:
 
 # Enable Flathub and disable Fedora Flatpaks. Taken from Aurora's install-system-flatpak recipe
 [group('System')]
-setup-flatpak-repo:
+fix-flatpak-repo:
     #!/usr/bin/bash
 
     echo 'Enabling Flathub'
@@ -76,6 +76,6 @@ setup-flatpak-repo:
 [group('System')]
 install-system-flatpaks:
     #!/usr/bin/bash
-    echo 'Installing Flatpaks'
     FLATPAK_LIST=$(< /usr/share/ublue-os/bazzite/flatpak/install)
+    echo 'Installing defaults Flatpaks'
     flatpak install --system --assumeyes ${FLATPAK_LIST}
