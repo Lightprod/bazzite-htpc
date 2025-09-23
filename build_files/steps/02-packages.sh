@@ -58,5 +58,5 @@ echo "Installing packages"
 echo "Disabling COPR repos"
 
     for repo in $COPR_REPOS; do
-        dnf5 copr disable $COPR_REPOS -y
+        dnf5 copr disable $repo -y
     done
