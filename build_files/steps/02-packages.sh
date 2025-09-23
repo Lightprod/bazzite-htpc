@@ -65,8 +65,8 @@ echo "Enabling COPR repos"
 
 echo "Installing copr packages"
 
-    dnf5 install --skip-broken --skip-unavailable -y $COPR_PACKAGES_INSTALL
-
+    dnf5 install --skip-broken --skip-unavailable -y heroic-games-launcher-bin
+    dnf5 install --skip-broken --skip-unavailable --setopt=install_weak_deps=False -y plasma-bigscreen
 
 echo "Disabling COPR repos"
 
