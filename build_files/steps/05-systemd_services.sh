@@ -11,8 +11,8 @@ systemctl enable sshd
 # echo 'Enabling default flatpak install service' # For installing default flatpaks
 # systemctl enable default-flatpak-manager
 
-# echo 'Enabling oobe service' # For iso installs
-# systemctl enable oobe
+echo 'Enabling oobe service' # For iso installs
+systemctl enable oobe
 
 echo 'Enabling syncthingy serivce'
 systemctl enable syncthingy

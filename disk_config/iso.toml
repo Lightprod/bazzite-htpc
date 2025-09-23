@@ -2,8 +2,6 @@
 contents = """
 %post
 bootc switch --transport --enforce-container-sigpolicy registry ghcr.io/lightprod/bazzite-htpc:unstable
-FLATPAK_LIST=$(< /usr/share/ublue-os/bazzite/flatpak/install)
-flatpak install --system --assumeyes ${FLATPAK_LIST}
 %end
 """
 
