@@ -17,7 +17,7 @@ GIT_RPM_INSTALL_LIST_FILE=/ctx/files/dnf/packages_install
 GIT_COPR_RPM_INSTALL_LIST_FILE=/ctx/files/dnf/copr_packages_install
 GIT_DISTANT_RPM_INSTALL_LIST_FILE=/ctx/files/dnf/non-repo_packages
 GIT_RPM_UNINSTALL_LIST_FILE=/ctx/files/dnf/packages_remove
-
+EXCLUDED_PACKAGE="PackageKit-Qt6,dolphin,kactivitymanagerd,kdenetwork-filesharing,kf6-frameworkintegration,kpipewire,ksystemstats,kwin,libkworkspace6,plasma-breeze,plasma-integration,plasma-milou,plasma-nm-openconnect,plasma-nm-vpnc,plasma-print-manager,plasma-print-manager-libs,plasma-systemsettings,plasma-workspace-common,plasma5support,xdg-desktop-portal-kde,aurorae,dolphin-libs,kde-cli-tools,kdesu,kf6-frameworkintegration-libs,kscreenlocker,kwayland,kwin-common,kwin-libs,kwrited,libplasma,plasma-desktop,plasma-lookandfeel-fedora,plasma-nm,plasma-nm-openvpn,plasma-pa,plasma-workspace,plasma-workspace-libs,powerdevil"
 
 
 # ================================================================================
@@ -66,7 +66,7 @@ echo "Enabling COPR repos"
 echo "Installing copr packages"
 
     dnf5 install --skip-broken --skip-unavailable -y heroic-games-launcher-bin
-    dnf5 install --skip-broken --skip-unavailable --setopt=install_weak_deps=False -y plasma-bigscreen
+    dnf5 install --skip-broken --skip-unavailable --setopt=install_weak_deps=False --exclude=$EXCLUDED_PACKAGE -y plasma-bigscreen
 
 echo "Disabling COPR repos"
 
