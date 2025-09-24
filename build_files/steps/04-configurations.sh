@@ -8,13 +8,15 @@ DISTROSELF_DIR=/etc/skel/.var/app/com.ranfdev.DistroShelf
 
 UJUST_WORK_FOLDER=/tmp/ujust
 UJUST_CONFIG_FILE=/usr/share/ublue-os/justfile
+SCRIPT_FOLDER=/usr/share/ublue-os/bazzite-htpc/scripts
 
 # SYSTEMD_USER_SERVICE_FOLDER=/etc/skel/.config/systemd/user/*
 # SYSTEMD_USER_SERVICE_SYSLINK_FOLDER=/etc/skel/.config/systemd/user/default.target.wants
 
 GIT_UJUST_BAZZITE_HTPC_CONFIG_FILE=/ctx/files/just/justfile
 GIT_UJUST_OVERWRITES_CONFIG_FILE=/ctx/files/just/justfile-overwrites
-UJUST_OVERWRITES_CONFIG=$(< $GIT_UJUST_OVERWRITES_CONFIG_FILE) 
+UJUST_OVERWRITES_CONFIG=$(< $GIT_UJUST_OVERWRITES_CONFIG_FILE)
+
 # ===================================================================
 
 # Remove default DistroShelf config
@@ -43,6 +45,11 @@ echo 'Copying justfile to usr'
 cp upstream-justfile $UJUST_CONFIG_FILE
 
 # ===================================================================
+
+echo 'Fix scripts permissions'
+
+cd $SCRIPT_FOLDER
+chmod +x *.sh
 
 # mkdir ${SYSTEMD_USER_SERVICE_SYSLINK_FOLDER}
 # cp $SYSTEMD_USER_SERVICE_FOLDER $SYSTEMD_USER_SERVICE_SYSLINK_FOLDER
