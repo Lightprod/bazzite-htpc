@@ -60,13 +60,20 @@ echo "Installing distant packages"
 echo "Enabling COPR repos"
 
     for repo in $COPR_REPOS; do
+        REPO_ID="copr:copr.fedorainfracloud.org:${repo////:}"
         dnf5 copr enable $repo -y
+        dnf5 config-manager setopt "${REPO_ID}.priority=1"
+
+        echo "Updating installed KDE packages from COPR"
+        dnf5 upgrade -y --repo="${REPO_ID}" --allowerasing
     done
+
 
 echo "Installing copr packages"
 
     dnf5 install --skip-broken --skip-unavailable -y heroic-games-launcher-bin
-    dnf5 install --skip-unavailable --setopt=install_weak_deps=False --exclude=$EXCLUDED_PACKAGE -y plasma-bigscreen
+
+    dnf5 install --skip-broken --skip-unavailable -y plasma-bigscreen
 
 echo "Disabling COPR repos"
 
