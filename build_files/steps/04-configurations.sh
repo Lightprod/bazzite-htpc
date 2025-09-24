@@ -8,11 +8,11 @@ DISTROSELF_DIR=/etc/skel/.var/app/com.ranfdev.DistroShelf
 
 UJUST_WORK_FOLDER=/tmp/ujust
 UJUST_CONFIG_FILE=/usr/share/ublue-os/justfile
+SCRIPT_FOLDER=/usr/share/ublue-os/bazzite-htpc/scripts
 
 GIT_UJUST_BAZZITE_HTPC_CONFIG_FILE=/ctx/files/just/justfile
 GIT_UJUST_OVERWRITES_CONFIG_FILE=/ctx/files/just/justfile-overwrites
-UJUST_OVERWRITES_CONFIG=$(< $GIT_UJUST_OVERWRITES_CONFIG_FILE) 
-
+UJUST_OVERWRITES_CONFIG=$(< $GIT_UJUST_OVERWRITES_CONFIG_FILE)
 
 # ===================================================================
 
@@ -43,3 +43,7 @@ cp upstream-justfile $UJUST_CONFIG_FILE
 
 # ===================================================================
 
+echo 'Fix scripts permissions'
+
+cd $SCRIPT_FOLDER
+chmod +x *.sh
